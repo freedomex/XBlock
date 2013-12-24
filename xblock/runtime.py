@@ -3,6 +3,7 @@ Machinery to make the common case easy when building new runtimes
 """
 
 import functools
+import gettext
 import re
 import threading
 
@@ -496,6 +497,26 @@ class Runtime(object):
         # Write out dirty fields
         block.save()
         return results
+
+    # Guaranteed services
+
+    def i18n(self):
+        """Provide a `gettext.Translations` object for localization.
+
+        Use this to localize your text::
+
+            ugettext = self.runtime.i18n().ugettext
+            msg = ugettext("Welcome!")
+
+        Returns:
+            Translations: a Translations object appropriate for the current
+            user.
+
+        """
+        # The default implementation: just return a NullTranslations object.
+        # This provides no translations at all, it just returns the given
+        # messages as-is, but satisfies the interface.
+        return gettext.NullTranslations()
 
     # Querying
 

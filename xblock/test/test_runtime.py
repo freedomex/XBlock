@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Tests the features of xblock/runtime"""
 # Allow tests to access private members of classes
 # pylint: disable=W0212
@@ -388,6 +389,23 @@ def test_mixin_field_access():
     field_tester.field_z = 'foo'
     assert_equals('foo', field_tester.field_z)
     assert_false(field_tester._field_data.has(field_tester, 'field_z'))
+
+
+def test_i18n_default():
+    runtime = TestRuntime(Mock(), Mock(), ())
+    i18n = runtime.i18n()
+
+    def assert_equals_unicode(str1, str2):
+        """`str1` equals `str2`, and both are Unicode strings."""
+        assert_equals(str1, str2)
+        assert isinstance(str1, unicode)
+        assert isinstance(str2, unicode)
+
+    assert_equals_unicode(u"Welcome!", i18n.ugettext("Welcome!"))
+
+    assert_equals_unicode(u"Plural", i18n.ungettext("Singular", "Plural", 0))
+    assert_equals_unicode(u"Singular", i18n.ungettext("Singular", "Plural", 1))
+    assert_equals_unicode(u"Plural", i18n.ungettext("Singular", "Plural", 2))
 
 
 class Dynamic(object):

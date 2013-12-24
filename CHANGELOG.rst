@@ -7,6 +7,8 @@ These are notable changes in XBlock.
 0.3
 ---
 
+* Added `runtime.i18n` for access to localized text.
+
 * Make `context` an optional parameter for all views.
 
 * Add shortcut method to make rendering an XBlock's view with its own
